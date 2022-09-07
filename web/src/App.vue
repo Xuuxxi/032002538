@@ -1,30 +1,39 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <NavBar></NavBar>
+  <router-view />
 </template>
 
+<script>
+import NavBar from './components/NavBar.vue';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import $ from 'jquery';
+import { ref } from 'vue';
+
+export default {
+  components: { NavBar },
+  setup() {
+    let data = ref([]);
+    $.ajax({
+      url: "http://127.0.0.1:5000/getInfo",
+      data: {},
+      type: "get",
+      success(resp) {
+        data = resp.data;
+        console.log(data.value);
+      },
+      error(resp) {
+        console.log(resp);
+      }
+    })
+
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  background-image: url("@/assets/backpg.png");
+  background-size: cover;
 }
 </style>
