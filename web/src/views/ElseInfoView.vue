@@ -1,11 +1,16 @@
 <template>
-  <ContentField>港澳台信息</ContentField>
+  <div>
+    <ContentField>
+      <TestCharts></TestCharts>
+    </ContentField>
+  </div>
 </template>
 
 <script>
 import ContentField from '@/components/ContentField.vue';
+import TestCharts from '@/components/MyCharts/testCharts.vue';
 export default {
-    components: { ContentField }
+  components: { ContentField, TestCharts }
 }
 </script>
 

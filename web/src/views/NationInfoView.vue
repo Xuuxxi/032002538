@@ -1,11 +1,14 @@
 <template>
-  <ContentField>中国疫情信息</ContentField>
+  <div>
+    <ContentField>nation</ContentField>
+  </div>>
 </template>
 
 <script>
 import ContentField from '@/components/ContentField.vue';
+
 export default {
-    components: { ContentField }
+  components: { ContentField }
 }
 </script>
 

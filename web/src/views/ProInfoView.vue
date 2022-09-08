@@ -1,5 +1,7 @@
 <template>
-  <ContentField>各省份信息</ContentField>
+  <div>
+    <ContentField>各省份信息</ContentField>
+  </div>
 </template>
 
 <script>
