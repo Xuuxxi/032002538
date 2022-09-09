@@ -45,7 +45,7 @@ async def antiAntiCrawler(page):
 
 
 async def getOjSourceCode(url):
-    width, height = 1400, 800  # 网页宽高
+    width, height = 1, 1  # 网页宽高
     browser = await pyp.launch(headless=False,
                                userdataDir="c:/tmp",
                                args=[f'--window-size={width},{height}'])
