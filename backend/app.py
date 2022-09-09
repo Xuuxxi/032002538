@@ -13,12 +13,12 @@ def get_dayInfo():
     print("init... ")
 
 
-@app.route('/init')
+@app.route('/')
 def hello_world():  # put application's code here
     data = {
         "msg": "welcome"
     }
-
+    print('init success,enjoy the website!')
     return jsonify(data)
 
 

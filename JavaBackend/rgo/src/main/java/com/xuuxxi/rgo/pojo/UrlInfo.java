@@ -21,7 +21,7 @@ public class UrlInfo implements Serializable {
 
     private Long id;
 
-    private String cur_time;
+    private String curTime;
 
     private String url;
 }

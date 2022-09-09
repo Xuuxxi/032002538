@@ -21,19 +21,19 @@ public class DayInfo implements Serializable {
 
     private Long id;
 
-    private String cur_time;
+    private String curTime;
 
-    private String new_add;
+    private String newAdd;
 
-    private String new_null;
+    private String newNull;
 
-    private String pro_add;
+    private String proAdd;
 
-    private String pro_null;
+    private String proNull;
 
-    private String hk_total;
+    private String hkTotal;
 
-    private String tw_total;
+    private String twTotal;
 
-    private String am_total;
+    private String amTotal;
 }

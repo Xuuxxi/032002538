@@ -1,5 +1,6 @@
 package com.xuuxxi.rgo.controlelr;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xuuxxi.rgo.mapper.UrlInfoMapper;
 import com.xuuxxi.rgo.pojo.UrlInfo;
@@ -18,22 +19,22 @@ public class UrlInfoController {
     @Resource
     private UrlInfoMapper mapper;
 
-    @GetMapping("/getInfo/{curDay}")
-    public String getInfo(@PathVariable String curDay){
-        QueryWrapper<UrlInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("cur_time",curDay);
+    @GetMapping("/getInfo")
+    public String getInfo(@RequestParam String curDay){
+        LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UrlInfo::getCurTime,curDay);
         UrlInfo urlInfo = mapper.selectOne(wrapper);
         return urlInfo.getUrl();
     }
 
     @PostMapping("/setInfo")
     public String setInfo(@RequestBody UrlInfo urlInfo){
-        QueryWrapper<UrlInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("cur_time",urlInfo.getCur_time());
+        LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UrlInfo::getCurTime, urlInfo.getCurTime());
         List<UrlInfo> t = mapper.selectList(wrapper);
         if (t.size() == 0) {
             mapper.insert(urlInfo);
-        }else return "false";
+        }else return "False";
         return "Success";
     }
 }
