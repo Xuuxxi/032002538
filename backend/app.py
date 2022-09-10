@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -20,6 +22,14 @@ def hello_world():  # put application's code here
     }
     print('init success,enjoy the website!')
     return jsonify(data)
+
+@app.route('/sub')
+def sub_day():
+    if request.method == "GET":
+        cur_day = request.args.get("curDay")
+        res = (datetime.strptime(cur_day, '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d')
+        return jsonify({'cul_day': res})
+
 
 
 # @app.route('/getDayInfo', methods=["GET"])

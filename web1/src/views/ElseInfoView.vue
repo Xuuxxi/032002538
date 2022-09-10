@@ -1,16 +1,16 @@
 <template>
   <div>
     <ContentField>
-      <ElseInfoCharts></ElseInfoCharts>
+      <TestCharts></TestCharts>
     </ContentField>
   </div>
 </template>
 
 <script>
 import ContentField from '@/components/ContentField.vue';
-import ElseInfoCharts from '@/components/MyCharts/ElseInfoCharts.vue';
+import TestCharts from '@/components/MyCharts/testCharts.vue';
 export default {
-  components: { ContentField, ElseInfoCharts }
+  components: { ContentField, TestCharts }
 }
 </script>
 

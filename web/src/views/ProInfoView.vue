@@ -1,13 +1,16 @@
 <template>
   <div>
-    <ContentField>各省份信息</ContentField>
+    <ContentField>
+      <ProInfoCharts></ProInfoCharts>
+    </ContentField>
   </div>
 </template>
 
 <script>
 import ContentField from '@/components/ContentField.vue';
+import ProInfoCharts from '@/components/MyCharts/ProInfoCharts.vue';
 export default {
-    components: { ContentField }
+    components: { ContentField, ProInfoCharts }
 }
 </script>
 

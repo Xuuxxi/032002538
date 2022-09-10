@@ -12,8 +12,10 @@ import { getCurrentInstance } from "vue"
 export default {
     components: { NavBar },
     setup() {
-      getCurrentInstance()?.appContext.config.globalProperties.$axios.get('http://127.0.0.1:5000/')
-      .then(() => {console.log('inti success')});
+      getCurrentInstance()?.appContext.config.globalProperties.$axios.get('http://127.0.0.1:5000/getDayInfo')
+      .then((res) => {
+        dayInfo.value = res.data
+      });
     }
 }
 </script>

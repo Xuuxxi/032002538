@@ -49,30 +49,30 @@ def getPageInfo(url):
 
     # 返回json
     data = {
-        'cur_time': '',
-        'new_add': '',
-        'new_null': '',
-        'pro_add': '',
-        'pro_null': '',
-        'hk_total': '',
-        'tw_total': '',
-        'am_total': '',
+        'curTime': '',
+        'newAdd': '',
+        'newNull': '',
+        'proAdd': '',
+        'proNull': '',
+        'hkTotal': '',
+        'twTotal': '',
+        'amTotal': '',
     }
 
     # 获取日期信息 xxxx-xx-xx
-    data['cur_time'] = temp[-10:]
+    data['curTime'] = temp[-10:]
 
     # 新增确诊
     try:
-        data['new_add'] = re.findall('新增确诊病例(.*?)例', temp)[0]
+        data['newAdd'] = re.findall('新增确诊病例(.*?)例', temp)[0]
     except:
-        data['new_add'] = '0'
+        data['newAdd'] = '0'
 
     # 新增无症状
     try:
-        data['new_null'] = re.findall('新增无症状感染者(.*?)例', temp)[0]
+        data['newNull'] = re.findall('新增无症状感染者(.*?)例', temp)[0]
     except:
-        data['new_null'] = '0'
+        data['newNull'] = '0'
 
     # (港澳台外)所有省份新增确诊
     try:
@@ -85,9 +85,9 @@ def getPageInfo(url):
             if chkCity(pro_add_key[i]) == 1:
                 pro_add_info[pro_add_key[i]] = pro_add_value[i]
 
-        data['pro_add'] = json.dumps(pro_add_info)
+        data['proAdd'] = json.dumps(pro_add_info)
     except:
-        data['pro_add'] = '0'
+        data['proAdd'] = '0'
 
     # (港澳台外)所有省份新增无症状
     try:
@@ -100,35 +100,35 @@ def getPageInfo(url):
             if chkCity(pro_null_key[i]) == 1:
                 pro_null_info[pro_null_key[i]] = pro_null_value[i]
 
-        data['pro_null'] = json.dumps(pro_null_info)
+        data['proNull'] = json.dumps(pro_null_info)
     except:
-        data['pro_null'] = '0'
+        data['proNull'] = '0'
 
     # 港澳台信息
     # 香港
     try:
         pattern = '香港特别行政区[0-9]+例'
         s = re.findall(pattern, temp)[0]
-        data['hk_total'] = s[s.index('行政区') + 3:s.index('例')]
+        data['hkTotal'] = s[s.index('行政区') + 3:s.index('例')]
 
     except:
-        data['hk_total'] = '0'
+        data['hkTotal'] = '0'
 
     try:
         # 澳门
         pattern = '澳门特别行政区[0-9]+例'
         s = re.findall(pattern, temp)[0]
-        data['am_total'] = s[s.index('行政区') + 3:s.index('例')]
+        data['amTotal'] = s[s.index('行政区') + 3:s.index('例')]
     except:
-        data['am_total'] = '0'
+        data['amTotal'] = '0'
 
     try:
         # 台湾
         pattern = '台湾地区[0-9]+例'
         s = re.findall(pattern, temp)[0]
-        data['tw_total'] = s[s.index('地区') + 2:s.index('例')]
+        data['twTotal'] = s[s.index('地区') + 2:s.index('例')]
     except:
-        data['tw_total'] = '0'
+        data['twTotal'] = '0'
 
     return data
 
@@ -165,14 +165,16 @@ def updUrlInfo():
 
     for i in url:
         data = {
-            'cur_time': getDayInfo(i),
+            'curTime': getDayInfo(i),
             'url': i
         }
 
         rs = setJavaUrlInfo(data)
+        print(rs)
         if rs == '"false"':
             return
         rs = setJavaDayInfo(getPageInfo(i))
+        print(rs)
         if rs == '"false"':
             return
 
@@ -195,7 +197,7 @@ def setJavaUrlInfo(data):
 
 
 def getJavaUrlInfo(data):
-    rs = requests.get(str('http://localhost:8081/urlInfo/getInfo/' + data))
+    rs = requests.get(str('http://localhost:8081/urlInfo/getInfo?curDay=' + data))
     return rs.text
 
 
@@ -205,7 +207,7 @@ def setJavaDayInfo(data):
 
 
 def getJavaDayInfo(data):
-    rs = requests.get(str('http://localhost:8081/dayInfo/getInfo/' + data))
+    rs = requests.get(str('http://localhost:8081/dayInfo/getInfo?curDay=' + data))
     return rs.text
 
 

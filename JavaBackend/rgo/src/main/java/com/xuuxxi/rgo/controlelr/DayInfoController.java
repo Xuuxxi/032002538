@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xuuxxi.rgo.common.R;
 import com.xuuxxi.rgo.mapper.DayInfoMapper;
+import com.xuuxxi.rgo.pojo.CurDay;
 import com.xuuxxi.rgo.pojo.DayInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,14 +31,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dayInfo")
+@Slf4j
 public class DayInfoController {
     @Resource
     private DayInfoMapper mapper;
 
-    @GetMapping("/getInfo")
-    public DayInfo getInfo(@RequestParam String curDay){
+    @PostMapping("/getInfo")
+    public DayInfo getInfo(@RequestBody DayInfo dayInfo){
+        log.info("curTime is " + dayInfo.getCurTime());
         LambdaQueryWrapper<DayInfo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(DayInfo::getCurTime,curDay);
+        wrapper.eq(DayInfo::getCurTime,dayInfo.getCurTime());
         return mapper.selectOne(wrapper);
     }
 

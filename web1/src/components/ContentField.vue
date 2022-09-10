@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 div.content-field{
-  width: 70%;
+  width: 80%;
   height: 80%;
   margin-top: 20px;
 }

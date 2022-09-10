@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <h3>echart前后端交互使用</h3>
     <div id="main" :style="{width: '350px', height: '350px'}"></div>
@@ -73,4 +73,4 @@ export default {
   }
 }
 </script>
-
+ -->

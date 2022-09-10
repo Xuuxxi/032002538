@@ -1,14 +1,17 @@
 <template>
   <div>
-    <ContentField>nation</ContentField>
-  </div>>
+    <ContentField>
+      <NationInfoCharts></NationInfoCharts>
+    </ContentField>
+  </div>
 </template>
 
 <script>
 import ContentField from '@/components/ContentField.vue';
+import NationInfoCharts from '@/components/MyCharts/NationInfoCharts.vue';
 
 export default {
-  components: { ContentField }
+  components: { ContentField, NationInfoCharts }
 }
 </script>
 
