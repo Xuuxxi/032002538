@@ -1,6 +1,10 @@
 # 插入
 import pymysql
 
+"""
+数据库操作
+"""
+
 
 def ins(info):
     # 连接database

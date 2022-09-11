@@ -13,6 +13,10 @@ json.dumps(res) dic res -> str res
 json.loads(res) str res -> dic res
 """
 
+"""
+信息处理部分
+"""
+
 
 # 检查是否在查找范围
 def chkCity(city):

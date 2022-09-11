@@ -2,12 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import NationView from '../views/NationInfoView.vue'
 import ProView from '../views/ProInfoView.vue'
 import ElseView from '../views/ElseInfoView.vue'
+import HomePage from '../views/HomePage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/nation'
+    component: HomePage
   },
   {
     path: '/nation',

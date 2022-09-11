@@ -26,9 +26,9 @@
         </ul>
         <ul class="navbar-nav">
           <div class="input-group input-group-sm">
-            <button class="input-group-text" @click="changeDay()">查询日期</button>
             <input type="text" class="form-control" aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-sm" placeholder="edit me" v-model="dayInfo">
+            <button class="input-group-text" @click="changeDay()">查询日期</button>
           </div>
         </ul>
       </div>

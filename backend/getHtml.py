@@ -4,6 +4,11 @@ import pyppeteer as pyp
 import requests
 from pyppeteer import launcher
 
+
+"""
+爬虫主体部分
+"""
+
 # 在导入 launch 之前 把 --enable-automation 禁用 防止监测webdriver
 launcher.DEFAULT_ARGS.remove("--enable-automation")
 

@@ -69,21 +69,20 @@ export default {
           curTime: dayInfo
         }
       }).then((res) => {
-        this.getNewAdd(res.data.hkTotal,res.data.twTotal,res.data.amTotal,dayInfo);
+        var cur_hk = res.data.hkTotal,cur_tw = res.data.twTotal,cur_am = res.data.amTotal
+        this.$http({
+          method: "get",
+          url: "http://localhost:5000/sub",
+          params: {
+            curDay: dayInfo
+          }
+        }).then((res) => {
+          //计算港澳台新增并且返回
+          this.getNewDayInfo(cur_hk, cur_tw, cur_am, res.data.cul_day)
+        })
       })
     },
-    getNewAdd(a, b, c, dayInfo) {``
-      this.$http({
-        method: "get",
-        url: "http://localhost:5000/sub",
-        params: {
-          curDay: dayInfo
-        }
-      }).then((res) => {
-        this.getNewDayInfo(a,b,c,res.data.cul_day)
-      })
-    },
-    getNewDayInfo(a,b,c,cul_day){
+    getNewDayInfo(a, b, c, cul_day) {
       this.$http({
         method: "post",
         url: "http://localhost:8081/dayInfo/getInfo",
