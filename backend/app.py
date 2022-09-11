@@ -9,12 +9,14 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
+# 初始化当前日期数据
 @app.before_first_request
 def get_dayInfo():
     MyFunction.updUrlInfo()
     print("init... ")
 
 
+# 确认登陆成功
 @app.route('/')
 def hello_world():  # put application's code here
     data = {
@@ -23,13 +25,14 @@ def hello_world():  # put application's code here
     print('init success,enjoy the website!')
     return jsonify(data)
 
+
+# 得到当前日期的前一天日期
 @app.route('/sub')
 def sub_day():
     if request.method == "GET":
         cur_day = request.args.get("curDay")
         res = (datetime.strptime(cur_day, '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d')
         return jsonify({'cul_day': res})
-
 
 
 # @app.route('/getDayInfo', methods=["GET"])

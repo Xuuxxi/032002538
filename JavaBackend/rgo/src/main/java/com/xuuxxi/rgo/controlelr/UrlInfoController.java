@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @Author: Xuuxxi
  * @Date: 2022/9/9
+ * 日期对应url控制
  */
 @RestController
 @RequestMapping("/urlInfo")
@@ -19,6 +20,7 @@ public class UrlInfoController {
     @Resource
     private UrlInfoMapper mapper;
 
+    // 查
     @GetMapping("/getInfo")
     public String getInfo(@RequestParam String curDay){
         LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
@@ -27,6 +29,7 @@ public class UrlInfoController {
         return urlInfo.getUrl();
     }
 
+    // 增
     @PostMapping("/setInfo")
     public String setInfo(@RequestBody UrlInfo urlInfo){
         LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();

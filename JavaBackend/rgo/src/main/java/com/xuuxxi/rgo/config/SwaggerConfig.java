@@ -17,6 +17,7 @@ import java.util.List;
  * http://localhost:8080/swagger-ui.html
  * @Author: Xuuxxi
  * @Date: 2022/7/22
+ * 后端接口测试配置
  */
 @Configuration
 @EnableSwagger2

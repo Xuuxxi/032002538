@@ -18,7 +18,9 @@ import java.io.Serializable;
 public class CurDay implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    // 雪花算法自动生成
     private Long id;
 
+    // 当前日期
     private String curTime;
 }

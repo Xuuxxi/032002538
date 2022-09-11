@@ -44,6 +44,7 @@ async def antiAntiCrawler(page):
         '{ webdriver:{ get: () => false } }) }')
 
 
+# 爬取网页主题信息
 async def getOjSourceCode(url):
     width, height = 1, 1  # 网页宽高
     browser = await pyp.launch(headless=False,

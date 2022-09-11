@@ -18,17 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * let config = {
- *         headers: {'Content-Type': "multipart/json, charset=UTF-8"}
- *     };
- *     let data = {
- *         fileName: '我爱你中国'
- *     };
- *     this.$axios
- *     .post('/api/file/testconttype', data, config);
- */
-
+// 查询对应日期的爬虫信息
 @RestController
 @RequestMapping("/dayInfo")
 @Slf4j
@@ -36,6 +26,7 @@ public class DayInfoController {
     @Resource
     private DayInfoMapper mapper;
 
+    // 查
     @PostMapping("/getInfo")
     public DayInfo getInfo(@RequestBody DayInfo dayInfo){
         log.info("curTime is " + dayInfo.getCurTime());
@@ -44,6 +35,7 @@ public class DayInfoController {
         return mapper.selectOne(wrapper);
     }
 
+    // 增
     @PostMapping("/setInfo")
     public String setInfo(@RequestBody DayInfo dayInfo){
         LambdaQueryWrapper<DayInfo> wrapper = new LambdaQueryWrapper<>();

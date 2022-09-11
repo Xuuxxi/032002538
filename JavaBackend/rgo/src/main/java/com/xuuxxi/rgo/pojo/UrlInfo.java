@@ -19,9 +19,12 @@ import java.time.LocalDateTime;
 public class UrlInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    // 雪花算法自动生成id
     private Long id;
 
+    // 当前日期
     private String curTime;
 
+    // 当前日期对应url
     private String url;
 }
