@@ -38,6 +38,7 @@ function makeOption(day_list) {
 
 import * as echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
+
 export default {
   name: "testChats",
   data() {
@@ -55,50 +56,42 @@ export default {
         method: "get",
         url: "http://localhost:8081/curDay/getCurDay",
       }).then((res) => {
-        this.initChart(res.data)
-      });
-    },
-    initChart(dayInfo) {
-      this.char = echarts.init(document.getElementById("main"));
-
-      // 获取日期对应具体信息
-      this.$http({
-        method: "post",
-        url: "http://localhost:8081/dayInfo/getInfo",
-        data: {
-          curTime: dayInfo
-        }
-      }).then((res) => {
-        var cur_hk = res.data.hkTotal,cur_tw = res.data.twTotal,cur_am = res.data.amTotal
+        this.char = echarts.init(document.getElementById("main"));
+        var dayInfo = res.data
+        // 获取日期对应具体信息
         this.$http({
-          method: "get",
-          url: "http://localhost:5000/sub",
-          params: {
-            curDay: dayInfo
+          method: "post",
+          url: "http://localhost:8081/dayInfo/getInfo",
+          data: {
+            curTime: dayInfo
           }
         }).then((res) => {
-          //计算港澳台新增并且返回
-          this.getNewDayInfo(cur_hk, cur_tw, cur_am, res.data.cul_day)
-        })
-      })
-    },
-    getNewDayInfo(a, b, c, cul_day) {
-      this.$http({
-        method: "post",
-        url: "http://localhost:8081/dayInfo/getInfo",
-        data: {
-          curTime: cul_day
-        }
-      }).then((res) => {
-        let data_list = new Array();
-        data_list.push(parseInt(a) - parseInt(res.data.hkTotal))
-        data_list.push(parseInt(b) - parseInt(res.data.twTotal))
-        data_list.push(parseInt(c) - parseInt(res.data.amTotal))
-        console.log(data_list)
+          var cur_hk = res.data.hkTotal, cur_tw = res.data.twTotal, cur_am = res.data.amTotal
+          this.$http({
+            method: "get",
+            url: "http://localhost:5000/sub",
+            params: {
+              curDay: dayInfo
+            }
+          }).then((res) => {
+            this.$http({
+              method: "post",
+              url: "http://localhost:8081/dayInfo/getInfo",
+              data: {
+                curTime: res.data.cul_day
+              }
+            }).then((res) => {
+              let data_list = new Array();
+              data_list.push(parseInt(cur_hk) - parseInt(res.data.hkTotal))
+              data_list.push(parseInt(cur_tw) - parseInt(res.data.twTotal))
+              data_list.push(parseInt(cur_am) - parseInt(res.data.amTotal))
 
-        this.char.setOption(makeOption(data_list));
-      })
-    }
+              this.char.setOption(makeOption(data_list));
+            })
+          })
+        })
+      });
+    },
   }
 }
 </script>

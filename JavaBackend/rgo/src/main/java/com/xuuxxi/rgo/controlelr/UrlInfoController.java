@@ -21,12 +21,20 @@ public class UrlInfoController {
     private UrlInfoMapper mapper;
 
     // 查
-    @GetMapping("/getInfo")
-    public String getInfo(@RequestParam String curDay){
-        LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UrlInfo::getCurTime,curDay);
-        UrlInfo urlInfo = mapper.selectOne(wrapper);
-        return urlInfo.getUrl();
+    @PostMapping("/getInfo")
+    public UrlInfo getInfo(@RequestBody UrlInfo urlInfo){
+        UrlInfo res = null;
+        System.out.println(urlInfo);
+        if(urlInfo.getCurTime() != null) {
+            LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(UrlInfo::getCurTime,urlInfo.getCurTime());
+            res = mapper.selectOne(wrapper);
+        }else{
+            LambdaQueryWrapper<UrlInfo> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(UrlInfo::getUrl,urlInfo.getUrl());
+            res = mapper.selectOne(wrapper);
+        }
+        return res;
     }
 
     // 增

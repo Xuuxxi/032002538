@@ -50,7 +50,7 @@ async def antiAntiCrawler(page):
 
 
 # 爬取网页主题信息
-async def getOjSourceCode(url):
+async def getOjSourceCode(url, flag):
     width, height = 1, 1  # 网页宽高
     browser = await pyp.launch(headless=False,
                                userdataDir="c:/tmp",
@@ -59,7 +59,10 @@ async def getOjSourceCode(url):
     await antiAntiCrawler(page)  # 反爬虫函数
     await page.setViewport({'width': width, 'height': height})
     await page.goto(url)
-    await page.waitForXPath('/html/body/div[3]/div[2]')
+    if flag == 1:
+        await page.waitForXPath('/html/body/div[3]/div[2]')
+    else:
+        await page.waitForXPath('/html')
     session = await makeSession(page)  # 调用函数获取session
     html = sessionGetHtml(session, url)
     await browser.close()
@@ -67,5 +70,5 @@ async def getOjSourceCode(url):
     return html
 
 
-def get(url):
-    return asyncio.get_event_loop().run_until_complete(getOjSourceCode(url))
+def get(url, flag):
+    return asyncio.get_event_loop().run_until_complete(getOjSourceCode(url, flag))

@@ -38,6 +38,6 @@ public class CurDayController {
     public String updCurDay(@RequestBody CurDay curDay){
         curDay.setId(1L);
         mapper.updateById(curDay);
-        return "Success";
+        return mapper.selectById(1L).getCurTime();
     }
 }

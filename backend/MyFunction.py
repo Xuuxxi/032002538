@@ -29,7 +29,7 @@ def chkCity(city):
 # 获取关键信息
 def getHtmlMainInfo(url):
     t = ''
-    temp = getHtml.get(url)
+    temp = getHtml.get(url, 1)
     # 获取日期信息
     pattern = '20[0-9]+-[0-9]+-[0-9]+'
     infoTmp = re.findall(pattern, temp)
@@ -140,7 +140,7 @@ def getPageInfo(url):
 # 获取所有疫情信息页面的 url
 def getUrlInfo():
     urlInfo = []
-    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml')
+    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml', 1)
 
     pattern = 'href=\".*\.shtml\"'
     infoTmp = re.findall(pattern, temp)
@@ -148,7 +148,27 @@ def getUrlInfo():
         urlInfo.append('http://www.nhc.gov.cn' + i[6:len(i) - 1])
 
     for i in range(2, 40):
-        t = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd_' + str(i) + '.shtml')
+        t = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd_' + str(i) + '.shtml', 1)
+        pattern = 'href=\".*\.shtml\"'
+        tInfo = re.findall(pattern, t)
+        for j in tInfo:
+            urlInfo.append('http://www.nhc.gov.cn' + j[6:len(j) - 1])
+
+    return urlInfo
+
+
+# 获取疫苗页面url
+def getMedUrlInfo():
+    urlInfo = []
+    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqjzqk/list_gzbd.shtml', 2)
+
+    pattern = 'href=\".*\.shtml\"'
+    infoTmp = re.findall(pattern, temp)
+    for i in infoTmp:
+        urlInfo.append('http://www.nhc.gov.cn' + i[6:len(i) - 1])
+
+    for i in range(2, 24):
+        t = getHtml.get('http://www.nhc.gov.cn/xcs/yqjzqk/list_gzbd_' + str(i) + '.shtml', 1)
         pattern = 'href=\".*\.shtml\"'
         tInfo = re.findall(pattern, t)
         for j in tInfo:
@@ -159,8 +179,24 @@ def getUrlInfo():
 
 # 更新最近的 url
 def updUrlInfo():
+    # 每日新增更新
+    medUrl = []
+    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqjzqk/list_gzbd.shtml', 2)
+
+    pattern = 'href=\".*\.shtml\"'
+    infoTmp = re.findall(pattern, temp)
+    for i in infoTmp:
+        medUrl.append('http://www.nhc.gov.cn' + i[6:len(i) - 1])
+
+    for i in medUrl:
+        rs = setJavaUrlInfo(getMedNum(i))
+        print(rs)
+        if rs == '"False"':
+            break
+
+    # dayInfo和url更新
     url = []
-    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml')
+    temp = getHtml.get('http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml', 1)
 
     pattern = 'href=\".*\.shtml\"'
     infoTmp = re.findall(pattern, temp)
@@ -185,11 +221,23 @@ def updUrlInfo():
 
 # 获取网页日期数据
 def getDayInfo(url):
-    temp = getHtml.get(url)
+    temp = getHtml.get(url, 1)
     pattern = '20[0-9]+-[0-9]+-[0-9]+'
     infoTmp = re.findall(pattern, temp)
     s = infoTmp[2]
     return (datetime.strptime(s, '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d')
+
+
+# 获取疫苗确诊病例
+def getMedNum(url):
+    temp = getHtml.get(url, 2)
+    pattern = '20[0-9]+-[0-9]+-[0-9]+'
+    infoTmp = re.findall(pattern, temp)
+    s = infoTmp[2]
+    dayInfo = (datetime.strptime(s, '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d')
+    rs = re.findall('新冠病毒疫苗.*万剂次', temp)[0]
+    medNum = rs[rs.index('疫苗') + 2:-3]
+    return {'curTime': medNum, 'url': dayInfo}  # 作为新增内容，这边纯粹是为了少写一个数据库，在实际开发中不可以这样混杂数据存储
 
 
 # -----------------------------------------------------------------------------------

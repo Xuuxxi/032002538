@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1> This is My echarts demo</h1>
     <div id="main" style="width:100%;height:700px;"></div>
   </div>
 </template>
